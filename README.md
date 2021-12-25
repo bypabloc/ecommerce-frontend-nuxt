@@ -1,4 +1,4 @@
-# myfirstproject
+# ecommerce-frontend-nuxt
 
 ## Build Setup
 
