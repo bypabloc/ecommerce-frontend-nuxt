@@ -1,14 +1,13 @@
 <template>
-    <div>
-        <v-text-field
-            :value="value"
-            :label="label"
-            :hint="errors.length > 0 ? legend : ''"
-            :error-messages="validated ? errors : []"
-            @keyup="onChange"
-            @keyup.enter="onEnter"
-        />
-    </div>
+    <v-text-field
+        :value="value"
+        :label="label"
+        :hint="legend"
+        persistent-hint
+        :error-messages="validated ? errors : []"
+        @keyup="onChange"
+        @keyup.enter="onEnter"
+    />
     <!-- https://vuetifyjs.com/en/components/text-fields/#props -->
     <!-- https://vuetifyjs.com/en/components/inputs/#error-count -->
 </template>
