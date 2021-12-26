@@ -3,12 +3,11 @@
         <v-text-field
             :value="value"
             :label="label"
-            :hint="legend"
+            :hint="errors.length > 0 ? legend : ''"
             :error-messages="validated ? errors : []"
             @keyup="onChange"
             @keyup.enter="onEnter"
         />
-        validated: {{ validated }}
     </div>
     <!-- https://vuetifyjs.com/en/components/text-fields/#props -->
     <!-- https://vuetifyjs.com/en/components/inputs/#error-count -->
@@ -86,9 +85,10 @@ export default {
         const dialog = ref(false)
 
         const onChange = async (e) => {
-            const value = e?.target?.value ? e?.target?.value : e?.value
+            console.log('onChange: ', e)
+            const value = e?.target?.value ? e?.target?.value : ''
             console.log('onChange: ', value)
-            if (value) {
+            if (value !== undefined) {
                 try {
                     await schemaObject.validate({
                         [name]: value,
@@ -112,9 +112,7 @@ export default {
 
         const onEnter = (e) => {
             const value = e?.target?.value
-            if (value) {
-                emit('enter', value)
-            }
+            emit('enter', value)
         }
 
         return {

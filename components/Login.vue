@@ -24,9 +24,6 @@
                 <v-card-text>
                     <v-container>
                         <v-row>
-                            <pre>
-formValues: {{ formValues }}
-                            </pre>
                             <v-col
                                 cols="12"
                                 sm="12"
@@ -128,9 +125,9 @@ export default {
                 value: '',
                 errors: [],
                 rules: {
-                    maxlength: 3,
+                    maxlength: 50,
                     required: true,
-                    // email: true,
+                    email: true,
                 },
             },
             phone: '',
@@ -160,7 +157,8 @@ export default {
         }
 
         const submit = () => {
-            validated.value = !validated.value
+            console.log('submit')
+            validated.value = true
         }
 
         return {
