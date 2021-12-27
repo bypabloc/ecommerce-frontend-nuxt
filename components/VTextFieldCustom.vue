@@ -14,7 +14,8 @@
 
 <script>
 import {
-    ref
+    ref,
+    watch
 } from '@nuxtjs/composition-api'
 
 import * as yup from 'yup'
@@ -47,19 +48,16 @@ export default {
         },
     },
     setup (props, { emit, }) {
-        console.log('LoginComponent setup')
+        const { name, rules, } = props
 
-        const { name, label, legend, rules, validated, } = props
-        console.log('name: ', name)
-        console.log('label: ', label)
-        console.log('legend: ', legend)
-        console.log('validated: ', validated)
+        watch(() => props.validated, (validated, prevValidated) => {
+            console.log('watch validated: ', validated, prevValidated)
+            console.log('watch value: ', props.value)
+            // e?.target?.value
+            onChange({ target: { value: props.value, }, })
+        })
 
         const { email, required, minlength, maxlength, } = rules
-        console.log('minlength: ', minlength)
-        console.log('maxlength: ', maxlength)
-        console.log('required: ', required)
-        console.log('email: ', email)
 
         const errors = ref([])
 
@@ -84,7 +82,6 @@ export default {
         const dialog = ref(false)
 
         const onChange = async (e) => {
-            console.log('onChange: ', e)
             const value = e?.target?.value ? e?.target?.value : ''
             console.log('onChange: ', value)
             if (value !== undefined) {

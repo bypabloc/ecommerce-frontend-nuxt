@@ -18,12 +18,12 @@
             </template>
             <v-card>
                 <v-card-title class="text-h5">
-                    Use Google's location service?
+                    Login
                 </v-card-title>
 
                 <v-card-text>
                     <v-container>
-                        <v-row>
+                        <v-row ref="form">
                             <v-col
                                 cols="12"
                                 sm="12"
@@ -45,9 +45,15 @@
                                 sm="12"
                                 md="12"
                             >
-                                <v-text-field
+                                <v-text-field-custom
+                                    v-model="formValues.phone.value"
+                                    name="phone"
                                     label="Phone (*)"
-                                    hint="Ex: +34 123 456 789"
+                                    legend="Ex: +34 123 456 789"
+                                    :validated="validated"
+                                    :rules="formValues.phone.rules"
+                                    @errors="(e) => formValues.phone.errors = e"
+                                    @enter="submit"
                                 />
                             </v-col>
                             <v-col
@@ -55,9 +61,15 @@
                                 sm="12"
                                 md="12"
                             >
-                                <v-text-field
+                                <v-text-field-custom
+                                    v-model="formValues.name.value"
+                                    name="name"
                                     label="Name (*)"
-                                    hint="Ex: bypabloc"
+                                    legend="Ex: bypabloc"
+                                    :validated="validated"
+                                    :rules="formValues.name.rules"
+                                    @errors="(e) => formValues.name.errors = e"
+                                    @enter="submit"
                                 />
                             </v-col>
                             <v-col
@@ -65,9 +77,15 @@
                                 sm="12"
                                 md="12"
                             >
-                                <v-text-field
+                                <v-text-field-custom
+                                    v-model="formValues.password.value"
+                                    name="password"
                                     label="Password (*)"
-                                    hint="Ex: Example$%123"
+                                    legend="Ex: Example$%123"
+                                    :validated="validated"
+                                    :rules="formValues.password.rules"
+                                    @errors="(e) => formValues.password.errors = e"
+                                    @enter="submit"
                                 />
                             </v-col>
                             <v-col
@@ -75,9 +93,15 @@
                                 sm="12"
                                 md="12"
                             >
-                                <v-text-field
+                                <v-text-field-custom
+                                    v-model="formValues.passwordConfirmation.value"
+                                    name="passwordConfirmation"
                                     label="Password confirmation (*)"
-                                    hint="Must match password"
+                                    legend="Must match password"
+                                    :validated="validated"
+                                    :rules="formValues.passwordConfirmation.rules"
+                                    @errors="(e) => formValues.passwordConfirmation.errors = e"
+                                    @enter="submit"
                                 />
                             </v-col>
                         </v-row>
@@ -130,10 +154,38 @@ export default {
                     email: true,
                 },
             },
-            phone: '',
-            name: '',
-            password: '',
-            passwordConfirmation: '',
+            phone: {
+                value: '',
+                errors: [],
+                rules: {
+                    maxlength: 50,
+                    required: true,
+                },
+            },
+            name: {
+                value: '',
+                errors: [],
+                rules: {
+                    maxlength: 50,
+                    required: true,
+                },
+            },
+            password: {
+                value: '',
+                errors: [],
+                rules: {
+                    maxlength: 50,
+                    required: true,
+                },
+            },
+            passwordConfirmation: {
+                value: '',
+                errors: [],
+                rules: {
+                    maxlength: 50,
+                    required: true,
+                },
+            },
         })
 
         const isValid = computed(() => {
@@ -144,10 +196,6 @@ export default {
                         return false
                     }
                 }
-                // if (formValues.value[key].errors.length > 0) {
-                //     console.log('isValid: ', false)
-                //     return false
-                // }
             }
             return true
         })
@@ -157,8 +205,9 @@ export default {
         }
 
         const submit = () => {
-            console.log('submit')
             validated.value = true
+            console.log('submit')
+            console.log('isValid', isValid.value)
         }
 
         return {
